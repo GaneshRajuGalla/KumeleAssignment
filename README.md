@@ -1,6 +1,6 @@
 # Kumele Assignment
 
-A demo iOS app built as part of a client test task for Kumele — a hobby-matching platform. The project has two parts: a swipe-based card UI with Passkey login, and a Figma design converted into a fully working iPad SwiftUI screen.
+A demo iOS app built as part of a client test task for Kumele, a hobby-matching platform. The project has two parts: a swipe-based card UI with Passkey login, and a Figma design converted into a fully working iPad SwiftUI screen.
 
 ---
 
@@ -10,7 +10,7 @@ A demo iOS app built as part of a client test task for Kumele — a hobby-matchi
 
 https://github.com/user-attachments/assets/ec882a8e-fae1-48c0-b98d-0c201d8faad8
 
-### History & Statistics — iPad
+### History & Statistics (iPad)
 
 https://github.com/user-attachments/assets/a7b7f3de-4e53-46ab-9c50-d14581287069
 
@@ -43,7 +43,7 @@ Swipe cards built with SwiftUI and native Passkey login using Face ID / Touch ID
 
 ### Part 2 — Figma to SwiftUI (iPad)
 
-The **History & Statistics** screen was built by reading the Figma design file directly through the Figma API — no manual layer inspection needed. Every color, spacing value, font size, and asset was pulled straight from the design and translated into SwiftUI code.
+The **History & Statistics** screen was built by reading the Figma design file directly through the Figma API. No manual layer inspection needed. Every color, spacing value, font size, and asset was pulled straight from the design and translated into SwiftUI code.
 
 **Workflow**
 
@@ -68,13 +68,13 @@ flowchart LR
 
 **Screen includes:**
 
-- Sidebar with 8 icons — the active indicator slides smoothly between icons using `matchedGeometryEffect`
+- Sidebar with 8 icons, active indicator slides smoothly between icons
 - Pie chart with Gold / Silver / Bronze medal segments, animates in on load
 - Medal badge with a continuous pendulum swing
-- Tap the info icon on any medal to see a detail popup with a spring animation
+- Tap the info icon on any medal to see a detail popup
 - Bar chart (Mar–Nov) with Jun highlighted in gold and an event tooltip above it
 - Year dropdown to switch between 2020–2023
-- On iPhone, a simple placeholder is shown instead — this screen is iPad only
+- On iPhone, a simple placeholder is shown. This screen is iPad only
 
 ---
 
