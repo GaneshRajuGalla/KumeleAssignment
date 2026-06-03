@@ -27,7 +27,7 @@ struct HomeView: View {
         case 0:  SwipeView()
         case 1:  PlaceholderView(icon: "newspaper.fill",       title: "Blog")
         case 2:  PlaceholderView(icon: "bag.fill",             title: "Shop")
-        case 3:  PlaceholderView(icon: "square.grid.2x2.fill", title: "More")
+        case 3:  iPadOnlyView()
         case 4:  PlaceholderView(icon: "person.fill",          title: "Profile")
         default: SwipeView()
         }
@@ -82,6 +82,19 @@ struct KumeleTabBar: View {
         }
         .frame(maxWidth: .infinity)
         .buttonStyle(.plain)
+    }
+}
+
+// MARK: - iPad-only wrapper
+
+struct iPadOnlyView: View {
+    @Environment(\.horizontalSizeClass) private var hSizeClass
+    var body: some View {
+        if hSizeClass == .regular {
+            HistoryStatisticsView()
+        } else {
+            PlaceholderView(icon: "square.grid.2x2.fill", title: "More")
+        }
     }
 }
 
