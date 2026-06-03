@@ -12,7 +12,7 @@ A demo iOS application built for the Kumele client assignment. It covers two del
 
 ### History & Statistics (iPad)
 
-<video src="Demo/chart_demo.mov" controls width="100%"></video>
+<video src="https://raw.githubusercontent.com/GaneshRajuGalla/KumeleAssignment/main/Demo/chart_demo.mp4" controls width="100%"></video>
 
 ---
 
