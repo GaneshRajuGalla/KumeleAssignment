@@ -12,7 +12,7 @@ https://github.com/user-attachments/assets/ec882a8e-fae1-48c0-b98d-0c201d8faad8
 
 ### History & Statistics (iPad)
 
-https://github.com/user-attachments/assets/a7b7f3de-4e53-46ab-9c50-d14581287069
+https://github.com/user-attachments/assets/7f04d4ee-bc69-403f-a53c-048fbad35dda
 
 ---
 
