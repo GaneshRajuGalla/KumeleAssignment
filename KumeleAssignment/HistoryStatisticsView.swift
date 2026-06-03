@@ -8,8 +8,6 @@
 import SwiftUI
 import Charts
 
-// MARK: - Models
-
 struct FMonthBar: Identifiable {
     let id = UUID()
     let month: String
@@ -49,8 +47,6 @@ private let medalRows: [(name: String, pill: Color, achieved: String)] = [
     ("Bronze", Color(red: 0.804, green: 0.498, blue: 0.196), "Achieved 1 medal"),
 ]
 
-// MARK: - View
-
 struct HistoryStatisticsView: View {
 
     @State private var barsVisible      = false
@@ -89,8 +85,6 @@ struct HistoryStatisticsView: View {
             withAnimation(.easeInOut(duration: 0.55).repeatForever(autoreverses: true)) { medalAngle = 12 }
         }
     }
-
-    // MARK: Sidebar
 
     private var sidebar: some View {
         let icons = ["icon_home", "icon_bookshelf", "icon_basket",
@@ -135,8 +129,6 @@ struct HistoryStatisticsView: View {
         .frame(width: 70)
     }
 
-    // MARK: Top Bar
-
     private var topBar: some View {
         ZStack {
             Color.white
@@ -160,8 +152,6 @@ struct HistoryStatisticsView: View {
             alignment: .bottom
         )
     }
-
-    // MARK: Content Area
 
     private var contentArea: some View {
         whiteCard
@@ -203,8 +193,6 @@ struct HistoryStatisticsView: View {
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 8))
     }
-
-    // MARK: Left Panel
 
     private var leftPanel: some View {
         VStack(alignment: .leading, spacing: 32) {
@@ -264,8 +252,6 @@ struct HistoryStatisticsView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    // MARK: Right Panel
-
     private var rightPanel: some View {
         VStack(alignment: .leading, spacing: 19) {
             HStack(alignment: .center) {
@@ -289,8 +275,6 @@ struct HistoryStatisticsView: View {
             barChart
         }
     }
-
-    // MARK: Bar Chart
 
     private var barChart: some View {
         Chart(barData) { bar in
@@ -378,8 +362,6 @@ struct HistoryStatisticsView: View {
         .padding(.horizontal, 10)
         .padding(.vertical, 6)
     }
-
-    // MARK: Medal Info Popup
 
     private func medalInfoPopup(name: String) -> some View {
         let row = medalRows.first { $0.name == name }!
