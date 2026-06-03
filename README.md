@@ -43,7 +43,7 @@ Swipe cards built with SwiftUI and native Passkey login using Face ID / Touch ID
 
 ### Part 2 — Figma to SwiftUI (iPad)
 
-The **History & Statistics** screen was built by reading the Figma design file directly through the Figma API. No manual layer inspection needed. Every color, spacing value, font size, and asset was pulled straight from the design and translated into SwiftUI code.
+The **History & Statistics** screen was built by reading the Figma design file directly through the Figma API, with no manual layer inspection needed. Every color, spacing value, font size, and asset was pulled straight from the design and translated into SwiftUI code.
 
 **Workflow**
 
