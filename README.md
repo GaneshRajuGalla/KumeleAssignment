@@ -56,6 +56,27 @@ Open `KumeleAssignment.xcodeproj` in Xcode, then:
 
 The **History & Statistics** screen was built by reading the Figma design file directly through the Figma API — no manual layer inspection needed. Every color, spacing value, font size, and asset was pulled straight from the design and translated into SwiftUI code.
 
+**Workflow**
+
+```mermaid
+flowchart LR
+    A[🎨 Figma Design] -->|File ID + Node ID| B[Figma MCP]
+    B -->|Design spec as JSON| C[Colors · Fonts · Spacing · Layers]
+    B -->|PNG at 3x| D[Icons · Logos · Avatars]
+    C --> E[Claude Code]
+    D --> E
+    E -->|Generated & refined| F[SwiftUI Code]
+    F --> G[📱 Running iOS App]
+
+    style A fill:#1e1e2e,color:#cdd6f4,stroke:#89b4fa
+    style B fill:#313244,color:#cdd6f4,stroke:#89b4fa
+    style C fill:#313244,color:#cdd6f4,stroke:#a6e3a1
+    style D fill:#313244,color:#cdd6f4,stroke:#a6e3a1
+    style E fill:#1e1e2e,color:#cdd6f4,stroke:#f38ba8
+    style F fill:#313244,color:#cdd6f4,stroke:#fab387
+    style G fill:#1e1e2e,color:#cdd6f4,stroke:#a6e3a1
+```
+
 **Screen includes:**
 
 - Sidebar with 8 icons — the active indicator slides smoothly between icons using `matchedGeometryEffect`
