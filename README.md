@@ -66,16 +66,6 @@ flowchart LR
     style G fill:#1e1e2e,color:#cdd6f4,stroke:#a6e3a1
 ```
 
-**Screen includes:**
-
-- Sidebar with 8 icons, active indicator slides smoothly between icons
-- Pie chart with Gold / Silver / Bronze medal segments, animates in on load
-- Medal badge with a continuous pendulum swing
-- Tap the info icon on any medal to see a detail popup
-- Bar chart (Mar–Nov) with Jun highlighted in gold and an event tooltip above it
-- Year dropdown to switch between 2020–2023
-- On iPhone, a simple placeholder is shown. This screen is iPad only
-
 ---
 
 ## Project Structure
