@@ -80,15 +80,23 @@ flowchart LR
 
 ## Project Structure
 
-| File | Description |
-|------|-------------|
-| `KumeleAssignmentApp.swift` | App entry point |
-| `ContentView.swift` | Switches between login and home based on auth state |
-| `LoginView.swift` | Passkey login and registration UI |
-| `PasskeyAuthManager.swift` | Handles passkey registration and sign-in |
-| `HomeView.swift` | Tab bar with 5 tabs and iPad-only screen wrapper |
-| `SwipeView.swift` | Card swipe UI and color theme |
-| `HistoryStatisticsView.swift` | History & Statistics iPad screen |
+```mermaid
+flowchart TD
+    A[KumeleAssignmentApp] --> B[ContentView\nAuth gate]
+    B --> C[LoginView\nPasskey login & registration]
+    B --> D[HomeView\nTab bar]
+    C --> E[PasskeyAuthManager\nRegistration & sign-in]
+    D --> F[SwipeView\nCard swipe UI]
+    D --> G[HistoryStatisticsView\nFigma → SwiftUI iPad screen]
+
+    style A fill:#1e1e2e,color:#cdd6f4,stroke:#89b4fa
+    style B fill:#313244,color:#cdd6f4,stroke:#89b4fa
+    style C fill:#313244,color:#cdd6f4,stroke:#fab387
+    style D fill:#313244,color:#cdd6f4,stroke:#89b4fa
+    style E fill:#1e1e2e,color:#cdd6f4,stroke:#fab387
+    style F fill:#1e1e2e,color:#cdd6f4,stroke:#a6e3a1
+    style G fill:#1e1e2e,color:#cdd6f4,stroke:#a6e3a1
+```
 
 ---
 
