@@ -35,20 +35,9 @@ Open `KumeleAssignment.xcodeproj` in Xcode, then:
 
 ### Part 1 — Swipe Animation + Passkey Login
 
-**Card Swipe**
+Swipe cards built with SwiftUI and native Passkey login using Face ID / Touch ID via `AuthenticationServices`. Use **Skip to Demo Mode** to explore the app without registering.
 
-- Drag to swipe cards left or right with real-time rotation and fade
-- A quick flick dismisses the card even with a short drag
-- Three cards stack behind the active card, each with a slightly different scale and corner radius
-- Smooth crossfade as a new card enters the stack
-
-**Passkey Login**
-
-- Register with a username — stored as a passkey using Face ID or Touch ID
-- One-tap sign in on return visits using `AuthenticationServices`
-- "Skip to Demo Mode" lets you jump straight into the app without registering
-
-> For full passkey support in production, the server needs to host an Apple App Site Association file and WebAuthn endpoints. The app entitlement is already set up.
+> For full passkey support in production, the server needs to host an Apple App Site Association file and WebAuthn endpoints. The app entitlement is already configured.
 
 ---
 
