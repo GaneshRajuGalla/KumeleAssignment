@@ -8,7 +8,8 @@ A demo iOS application built for the Kumele client assignment. It covers two del
 
 ### Swipe Animation + Passkey Login
 
-> 📹 _Video coming soon_
+https://github.com/user-attachments/assets/ec882a8e-fae1-48c0-b98d-0c201d8faad8
+
 
 ### History & Statistics (iPad)
 
