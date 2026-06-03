@@ -24,6 +24,8 @@ struct FPieSlice: Identifiable {
 }
 
 private let barData: [FMonthBar] = [
+    .init(month: "Jan", value: 127.72),
+    .init(month: "Feb", value:  96.08),
     .init(month: "Mar", value: 127.72),
     .init(month: "Apr", value:  83.19),
     .init(month: "May", value: 134.75),
@@ -36,9 +38,9 @@ private let barData: [FMonthBar] = [
 ]
 
 private let pieData: [FPieSlice] = [
-    .init(label: "Gold",   value: 12, color: Color(red: 0.871, green: 0.718, blue: 0.059)),
-    .init(label: "Silver", value:  8, color: Color(red: 0.678, green: 0.663, blue: 0.592)),
-    .init(label: "Bronze", value:  4, color: Color(red: 0.804, green: 0.498, blue: 0.196)),
+    .init(label: "Gold",   value: 8, color: Color(red: 0.871, green: 0.718, blue: 0.059)),
+    .init(label: "Silver", value: 8, color: Color(red: 0.678, green: 0.663, blue: 0.592)),
+    .init(label: "Bronze", value: 8, color: Color(red: 0.804, green: 0.498, blue: 0.196)),
 ]
 
 private let medalRows: [(name: String, pill: Color, achieved: String)] = [
@@ -51,12 +53,13 @@ private let medalRows: [(name: String, pill: Color, achieved: String)] = [
 
 struct HistoryStatisticsView: View {
 
-    @State private var barsVisible     = false
-    @State private var pieVisible      = false
+    @State private var barsVisible      = false
+    @State private var pieVisible       = false
     @State private var medalPop: String? = nil
     @State private var medalAngle: Double = -12
     @State private var activeSidebarIcon = 5
-    @State private var selectedYear    = 2022
+    @State private var selectedYear      = 2022
+    @State private var selectedMonth: String? = "Jun"
 
     private let years = [2020, 2021, 2022, 2023]
     @Namespace private var pillNS
@@ -70,7 +73,7 @@ struct HistoryStatisticsView: View {
                     topBar
                     HStack(spacing: 0) {
                         sidebar
-                        contentArea(geo: geo)
+                        contentArea
                     }
                 }
 
@@ -160,7 +163,7 @@ struct HistoryStatisticsView: View {
 
     // MARK: Content Area
 
-    private func contentArea(geo: GeometryProxy) -> some View {
+    private var contentArea: some View {
         whiteCard
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
@@ -186,16 +189,16 @@ struct HistoryStatisticsView: View {
                 leftPanel
                     .frame(maxWidth: .infinity)
                     .padding(.leading, 25)
-                    .padding(.top, 25)
-                    .padding(.bottom, 25)
+                    .padding(.top, 32)
+                    .padding(.bottom, 32)
 
                 rightPanel
                     .frame(maxWidth: .infinity)
-                    .padding(.top, 25)
+                    .padding(.top, 32)
                     .padding(.trailing, 25)
-                    .padding(.bottom, 25)
+                    .padding(.bottom, 32)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .frame(maxWidth: .infinity)
         }
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -257,7 +260,6 @@ struct HistoryStatisticsView: View {
                     }
                 }
             }
-            Spacer()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -274,41 +276,17 @@ struct HistoryStatisticsView: View {
                     .font(.system(size: 17, weight: .bold))
                     .foregroundStyle(.black)
                 Spacer()
-                Menu {
+                Picker("Year", selection: $selectedYear) {
                     ForEach(years, id: \.self) { year in
-                        Button {
-                            withAnimation(.easeInOut(duration: 0.2)) { selectedYear = year }
-                        } label: {
-                            HStack {
-                                Text(String(year))
-                                if year == selectedYear {
-                                    Image(systemName: "checkmark")
-                                }
-                            }
-                        }
+                        Text(String(year)).tag(year)
                     }
-                } label: {
-                    HStack(spacing: 5) {
-                        Text(String(selectedYear))
-                            .font(.system(size: 15))
-                            .foregroundStyle(.black)
-                        Image(systemName: "checkmark")
-                            .font(.caption.bold())
-                            .foregroundStyle(Color(white: 0.35))
-                    }
-                    .padding(.horizontal, 11).padding(.vertical, 7)
-                    .background(Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color(white: 0.78), lineWidth: 1)
-                    )
                 }
-                .menuStyle(.borderlessButton)
+                .pickerStyle(.menu)
+                .labelsHidden()
+                .tint(.black)
             }
 
             barChart
-            Spacer()
         }
     }
 
@@ -318,15 +296,13 @@ struct HistoryStatisticsView: View {
         Chart(barData) { bar in
             BarMark(
                 x: .value("Month", bar.month),
-                y: .value("Value", barsVisible ? bar.value : 0)
+                y: .value("Value", barsVisible ? bar.value : 0),
+                width: .fixed(40)
             )
-            .foregroundStyle(bar.month == "Jun"
+            .foregroundStyle(selectedMonth == bar.month
                 ? Color(red: 0.871, green: 0.718, blue: 0.059)
                 : Color(red: 0, green: 0.302, blue: 1.0))
             .cornerRadius(7, style: .continuous)
-            .annotation(position: .top, alignment: .center, spacing: 0) {
-                barAnnotation(for: bar.month)
-            }
         }
         .chartXAxis {
             AxisMarks(values: .automatic) { _ in
@@ -336,43 +312,71 @@ struct HistoryStatisticsView: View {
             }
         }
         .chartYAxis(.hidden)
-        .allowsHitTesting(false)
+        .chartYScale(domain: 0...(barData.map(\.value).max()! * 1.4))
+        .chartScrollableAxes(.horizontal)
+        .chartXVisibleDomain(length: 8)
+        .chartXSelection(value: $selectedMonth)
+        .chartOverlay { proxy in
+            GeometryReader { geo in
+                let maxVal = CGFloat(barData.map(\.value).max() ?? 144)
+                let scaledMax = maxVal * 1.4
+                if let frame = proxy.plotFrame,
+                   let mayX = proxy.position(forX: "May"),
+                   let junX = proxy.position(forX: "Jun") {
+                    let plot = geo[frame]
+                    let absMAY = plot.minX + mayX
+                    let absJUN = plot.minX + junX
+                    let cardCX = (absMAY + absJUN) / 2
+                    let cardTopY: CGFloat = plot.minY + 6
+                    let junVal = CGFloat(barData.first { $0.month == "Jun" }?.value ?? 114.83)
+                    let junBarTopY = plot.maxY - (junVal / scaledMax) * (plot.height - 22) - 22
+                    HStack(spacing: 0) {
+                        eventSection(name: "Group meditation", amount: "$305",
+                                     icon: "icon_spirituality", category: "Spirituality")
+                        Rectangle().fill(Color(white: 0.82)).frame(width: 0.8).padding(.vertical, 5)
+                        eventSection(name: "90's Hip-Hop", amount: "$100",
+                                     icon: "icon_party", category: "House Party")
+                    }
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 7))
+                    .overlay(RoundedRectangle(cornerRadius: 7).stroke(Color(white: 0.82), lineWidth: 0.8))
+                    .shadow(color: .black.opacity(0.07), radius: 4, x: 0, y: 2)
+                    .fixedSize()
+                    .position(x: cardCX, y: cardTopY + 22)
+                    Path { path in
+                        path.move(to: CGPoint(x: absJUN, y: cardTopY + 50))
+                        path.addLine(to: CGPoint(x: absJUN, y: junBarTopY))
+                    }
+                    .stroke(style: StrokeStyle(lineWidth: 2, lineCap: .round, dash: [0, 5]))
+                    .foregroundStyle(Color(white: 0.68))
+                }
+            }
+        }
         .frame(maxWidth: .infinity)
-        .frame(height: 260)
+        .frame(height: 246)
         .animation(.spring(response: 1.1, dampingFraction: 0.75).delay(0.5), value: barsVisible)
     }
 
-    @ViewBuilder
-    private func barAnnotation(for month: String) -> some View {
-        if month == "Jun" {
-            VStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 3) {
-                    Text("90's Hip-Hop")
-                        .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(.primary)
-                    HStack(spacing: 4) {
-                        Text("$100")
-                            .font(.system(size: 11, weight: .medium))
-                            .foregroundStyle(.secondary)
-                        Image("icon_party")
-                            .resizable().scaledToFit()
-                            .frame(width: 12, height: 12)
-                        Text("House Party")
-                            .font(.system(size: 11))
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .padding(.horizontal, 10)
-                .padding(.vertical, 7)
-                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 8))
-                .shadow(color: .black.opacity(0.12), radius: 6, x: 0, y: 2)
-
-                Circle()
-                    .fill(Color.secondary.opacity(0.4))
-                    .frame(width: 4, height: 4)
-                    .padding(.top, 4)
+    private func eventSection(name: String, amount: String, icon: String, category: String) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(name)
+                .font(.system(size: 12, weight: .bold))
+                .foregroundStyle(.black)
+            HStack(spacing: 4) {
+                Text(amount)
+                    .font(.system(size: 11))
+                    .foregroundStyle(Color(white: 0.45))
+                Image(icon)
+                    .resizable().scaledToFit()
+                    .frame(width: 12, height: 12)
+                    .opacity(0.6)
+                Text(category)
+                    .font(.system(size: 11))
+                    .foregroundStyle(Color(white: 0.45))
             }
         }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
     }
 
     // MARK: Medal Info Popup
